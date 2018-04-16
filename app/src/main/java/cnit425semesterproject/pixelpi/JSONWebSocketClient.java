@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -17,22 +18,25 @@ import java.net.URISyntaxException;
  * Created by jackb on 4/1/2018.
  */
 
-public class JSONWebSocketClient extends WebSocketClient {
+//Websocket Documentation
+//https://www.javadoc.io/doc/org.java-websocket/Java-WebSocket/1.3.8
+
+public class JSONWebSocketClient extends WebSocketClient /*implements Runnable*/ {
     private Context context;
     private JSONObject servermessage;
     private JSONWebSocketClientListener listener;
 
-    public JSONWebSocketClient(URI serverURI) {
+    /*public JSONWebSocketClient(URI serverURI) {
         super(serverURI);
-    }
+    }*/
 
     public JSONWebSocketClient(String host, int port, Context context, JSONWebSocketClientListener listener) throws URISyntaxException {
         super(new URI("ws://" + host + ":" + Integer.toString(port)));
         this.context = context;
         this.listener = listener;
-
-        //Log.i("URI", new URI("ws://" + host + ":" + Integer.toString(port) + "/ws").toASCIIString());
     }
+
+    //connect() and connectBlocking() start in background thread
 
     @Override
     public void onOpen(ServerHandshake handshakedata) {
@@ -70,6 +74,15 @@ public class JSONWebSocketClient extends WebSocketClient {
 
     @Override
     public void onError(Exception ex) {
+        if(ex instanceof JSONException)
+        {
+            Log.e("ClientException", "JSONException");
+        }
+
+        if (ex instanceof IOException)
+        {
+            Log.e("ClientException", "IOException");
+        }
 
     }
 
@@ -79,6 +92,8 @@ public class JSONWebSocketClient extends WebSocketClient {
         String stringjson = jsonObject.toString();
         this.send(stringjson);
 
-        Log.i("json", stringjson);
+        Log.i("sent json", stringjson);
     }
+
 }
+

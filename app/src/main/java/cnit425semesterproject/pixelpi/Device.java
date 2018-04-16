@@ -1,8 +1,11 @@
 package cnit425semesterproject.pixelpi;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.net.URI;
+import java.util.ArrayList;
 
 /**
  * Created by jackb on 3/28/2018.
@@ -11,7 +14,7 @@ import java.net.URI;
 public class Device {
     private String devicename;
     private String devicecode;
-    private URI macaddress;
+    private ArrayList<DeviceTask> deviceTasks;
     // TODO: figure out attributes
 
     //getter and setters
@@ -23,14 +26,6 @@ public class Device {
         this.devicename = devicename;
     }
 
-    public URI getMacaddress() {
-        return macaddress;
-    }
-
-    public void setMacaddress(URI macaddress) {
-        this.macaddress = macaddress;
-    }
-
     public String getDevicecode() {
         return devicecode;
     }
@@ -39,26 +34,56 @@ public class Device {
         this.devicecode = devicecode;
     }
 
+    public ArrayList<DeviceTask> getDeviceTasks() {
+        return deviceTasks;
+    }
+
+    public void setDeviceTasks(ArrayList<DeviceTask> deviceTasks) {
+        this.deviceTasks = deviceTasks;
+    }
+
     //constructors
     public Device()
     {
 
     }
 
-    public Device(String devicename, URI macaddress, String devicecode) {
+    public Device(String devicename, String devicecode, ArrayList<DeviceTask> deviceTasks) {
         this.devicename = devicename;
-        this.macaddress = macaddress;
+        this.deviceTasks = deviceTasks;
         this.devicecode = devicecode;
+    }
+
+    public Device(String devicename) { //for testing
+        this.devicename = devicename;
     }
 
     public Device(JSONObject jsonObject)
     {
-        String devicename; // =
-        URI macaddress; // = new URI();
-        String devicecode; //=
+        ArrayList<DeviceTask> deviceTasks = new ArrayList<>();
+        String devicecode = "";
 
-        //this.devicename = devicename;
-        //this.macaddress = macaddress;
-        //this.devicecode = devicecode;
+        try
+        {
+            devicecode = jsonObject.getString("device code"); //id for device code placeholder
+
+            JSONArray tasks = jsonObject.getJSONArray("tasks");
+            for (int i = 0; i < tasks.length(); i++)
+            {
+                JSONObject taskjson = tasks.getJSONObject(i);
+                DeviceTask deviceTask = new DeviceTask(taskjson); //check instanceof and absract devicetask
+                this.deviceTasks.add(deviceTask);
+            }
+            this.devicename = devicecode;
+            this.devicecode = devicecode;
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 }
