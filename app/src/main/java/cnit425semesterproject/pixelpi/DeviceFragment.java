@@ -7,9 +7,11 @@ import android.os.Handler;
 import android.support.v4.app.Fragment; // requires API 11+, newer version
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.net.URI;
@@ -26,21 +28,37 @@ public class DeviceFragment extends Fragment {
     private ListView lvdevices;
     private DeviceArrayAdapter deviceadapter;
     private ArrayList<Device> devices;
+    private DeviceFragmentListener listener;
 
     public static String DEVICES_FRAGMENT = "devices";
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //parse
+        devices = new ArrayList<>();
+
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         deviceadapter = new DeviceArrayAdapter(getActivity(), devices);
         lvdevices.setAdapter(deviceadapter);
+        lvdevices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Device device = devices.get(position);
+                listener.selecteddevice(device);
+                //Log.i("device clicked", device.getDevicename());
+            }
+        });
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //parse
-        this.devices = new ArrayList<>();
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        listener = (DeviceFragmentListener) context;
     }
 
     @Override
@@ -49,7 +67,6 @@ public class DeviceFragment extends Fragment {
             rootview = inflater.inflate(R.layout.device_fragment_layout, container, false);
             lvdevices =  rootview.findViewById(R.id.lvdevices);
         }
-
 
         return rootview;
     }
@@ -63,15 +80,8 @@ public class DeviceFragment extends Fragment {
     }
 
 
-
     public void updatedevices(ArrayList<Device> devices)
     {
-
-        /*if(deviceadapter != null) {*/
-            this.devices.clear(); // TODO: 4/15/2018 Fix null pointer for this.devices, find out where to declare it
-            this.devices.addAll(devices);
-            deviceadapter.notifyDataSetChanged();
-        //}
-
+        deviceadapter.updatedevices(devices);
     }
 }

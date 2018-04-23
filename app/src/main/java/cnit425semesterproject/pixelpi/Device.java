@@ -1,6 +1,8 @@
 package cnit425semesterproject.pixelpi;
 
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -56,10 +58,13 @@ public class Device {
 
     public Device(String devicename) { //for testing
         this.devicename = devicename;
+        this.devicecode = devicename;
+        this.deviceTasks = new ArrayList();
     }
 
-    public Device(JSONObject jsonObject)
+    public Device(JSONObject jsonObject) //problem area
     {
+        Log.i("JSON Device", jsonObject.toString());
         ArrayList<DeviceTask> deviceTasks = new ArrayList<>();
         String devicecode = "";
 
@@ -67,17 +72,18 @@ public class Device {
         {
             devicecode = jsonObject.getString("device code"); //id for device code placeholder
 
-            JSONArray tasks = jsonObject.getJSONArray("tasks");
-            for (int i = 0; i < tasks.length(); i++)
-            {
-                JSONObject taskjson = tasks.getJSONObject(i);
-                DeviceTask deviceTask = new DeviceTask(taskjson); //check instanceof and absract devicetask
-                this.deviceTasks.add(deviceTask);
+            if (jsonObject.has("tasks")) { //check if has tasks
+                JSONArray tasks = jsonObject.getJSONArray("tasks");
+                for (int i = 0; i < tasks.length(); i++)
+                {
+                    JSONObject taskjson = tasks.getJSONObject(i);
+                    DeviceTask deviceTask = new DeviceTask(taskjson); //check instanceof and absract devicetask
+                    deviceTasks.add(deviceTask);
+                }
             }
             this.devicename = devicecode;
             this.devicecode = devicecode;
-
-
+            this.deviceTasks = deviceTasks;
 
         } catch (JSONException e) {
             e.printStackTrace();

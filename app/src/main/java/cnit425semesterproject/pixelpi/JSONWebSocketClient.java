@@ -56,10 +56,10 @@ public class JSONWebSocketClient extends WebSocketClient /*implements Runnable*/
     @Override
     public void onMessage(String message) {
         //message received from server
+        Log.i("serverjson recieved", message);
         //parse JSON
         try {
             servermessage = new JSONObject(message);
-            Log.i("Message parsed", "JSONobject");
         } catch (JSONException e) {
             e.printStackTrace();
         }

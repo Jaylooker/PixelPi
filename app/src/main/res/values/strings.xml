@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PixelPi</string>
+
+    <string-array name="devicemodes">
+        <item>display</item>
+        <item>timer</item>
+        </string-array>
 </resources>

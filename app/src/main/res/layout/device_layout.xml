@@ -7,10 +7,10 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/imgmore"
+        android:id="@+id/imgdeviceicon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@drawable/genericdevice" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -25,12 +25,5 @@
         android:layout_height="wrap_content"
         android:text="[Device Name]"
         android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/txtaddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="[Device Address]"
-        android:textSize="18sp" />
 
 </LinearLayout>
