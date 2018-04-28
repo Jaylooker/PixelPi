@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
     private DeviceFragment devicefragment;
     private SettingsFragment settingsfragment;
     private EditFragment editfragment;
-    private URI uri;
     private boolean connected;
     private JSONWebSocketClient client;
     private JSONWebSocketClientListener JSONclientlistener;
@@ -42,12 +41,15 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
         //test_websocket not being used
 
         //activity references
+        //ui
         btndevices = (ImageButton) findViewById(R.id.btndevices);
         btnsettings = (ImageButton) findViewById(R.id.btnsettings);
        // btnedit = (ImageButton) findViewById(R.id.btnedit);
 
+        //other variables
         selecteddevice = new Device();
         devices = new ArrayList<>();
+        connected = false;
 
         //testing passing device to fragment
         /*devices = new ArrayList<>();
@@ -70,9 +72,9 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
             devicefragment.setArguments(getIntent().getExtras());
 
             FragmentTransaction fts = getSupportFragmentManager().beginTransaction();
-            fts.add(R.id.fragcontainer, devicefragment, DeviceFragment.DEVICES_FRAGMENT);
-            fts.add(R.id.fragcontainer, settingsfragment, SettingsFragment.SETTINGS_FRAGMENT);
-            fts.add(R.id.fragcontainer, editfragment, EditFragment.EDIT_FRAGMENT);
+            fts.add(R.id.fragcontainer, devicefragment, getString(R.string.DEVICES_FRAGMENT));
+            fts.add(R.id.fragcontainer, settingsfragment, getString(R.string.SETTINGS_FRAGMENT));
+            fts.add(R.id.fragcontainer, editfragment, getString(R.string.EDIT_FRAGMENT));
 
             fts.attach(devicefragment);
             fts.attach(settingsfragment);
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
             fts.show(devicefragment);
             fts.commit();
 
-            CURRENTTAG = DeviceFragment.DEVICES_FRAGMENT;
+            CURRENTTAG = getString(R.string.DEVICES_FRAGMENT);
         }
 
 
@@ -191,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
     }
 
     //more MainActivity methods
+    //switch between fragments using tags
     private void switchfragto(Fragment fragment)
     {
         Fragment currentfragment = getSupportFragmentManager().findFragmentByTag(CURRENTTAG); //get  current fragment in container
@@ -200,58 +203,30 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
             if(currentfragment instanceof  DeviceFragment) {
                 return;
             }
-            CURRENTTAG = DeviceFragment.DEVICES_FRAGMENT;
+            CURRENTTAG = getString(R.string.DEVICES_FRAGMENT);
         }
         else if (fragment instanceof SettingsFragment) {
             if(currentfragment instanceof  SettingsFragment) {
                 return;
             }
-            CURRENTTAG = SettingsFragment.SETTINGS_FRAGMENT;
+            CURRENTTAG = getString(R.string.SETTINGS_FRAGMENT);
         }
         else if (fragment instanceof  EditFragment) {
             if(currentfragment instanceof  EditFragment) {
                 return;
             }
-            CURRENTTAG = EditFragment.EDIT_FRAGMENT;
+            CURRENTTAG = getString(R.string.EDIT_FRAGMENT);
         }
 
-
         FragmentTransaction fts = getSupportFragmentManager().beginTransaction();
-
 
         fts.hide(currentfragment);
         fts.show(fragment);
 
         fts.commit();
-
     }
 
-    /*public void displaycolors( /*rgbcolor array ) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("cmd", "DISPLAY");
-            jsonObject.put("device code", "AD01");
-            jsonObject.put("send to", "NPO1");
-            JSONArray displaycolors = new JSONArray();
-            JSONArray rgbcolor1 = new JSONArray();
-            rgbcolor1.put(0, 255); //make into for loop
-            rgbcolor1.put(1, 0);
-            rgbcolor1.put(2, 0);
-
-            JSONArray rgbcolor2 = new JSONArray();
-            rgbcolor2.put(0, 0);
-            rgbcolor2.put(1, 255);
-            rgbcolor2.put(2, 0);
-
-            displaycolors.put(0, rgbcolor1);
-            displaycolors.put(1, rgbcolor2);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        client.sendJSON(jsonObject);
-
-    }*/
-
+    //merging two JSONObjects
     public JSONObject merge(JSONObject obj1, JSONObject obj2) throws JSONException {
         JSONObject merged = new JSONObject();
         JSONObject[] objects = {obj1, obj2};
@@ -268,14 +243,12 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
     //Fragment callback methods
 
     //SettingsFragment
+    //connect to server
     @Override
     public void connect(String url, int port) {
-        //connect to server
+        //disconnect if necessary
+        disconnect();
         //make client
-        if (client != null)  { //if already have client, close and release current one
-            client.close();
-            client = null;
-        }
         try {
             client = new JSONWebSocketClient(url, port, MainActivity.this, JSONclientlistener);
         } catch (URISyntaxException e) {
@@ -298,10 +271,14 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
         }
     }
 
+    //if already have client, close and release current one
     @Override
     public void disconnect() {
-        client.close();
-        client = null;
+        if (connected) {
+            client.close();
+            client = null;
+            connected = false;
+        }
     }
 
     //DeviceFragment
@@ -345,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
                     break;
             }
             */ //use switch, constants messing things up
-            if(deviceTask.getMode().equals(DeviceTask.DISPLAY)) {
+            if(deviceTask.getMode().equals(getString(R.string.SIMPLE))) {
                 DisplayTask displayTask = (DisplayTask) deviceTask;
                 //jsonObject.put("task", displayTask.toJSON());
                 jsonObject = merge(jsonObject, displayTask.toJSON());

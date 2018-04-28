@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,25 +17,20 @@ import java.net.URISyntaxException;
  * Created by jackb on 4/1/2018.
  */
 
+//JSON WebSocket client extended from java provided Web Socket client
 //Websocket Documentation
 //https://www.javadoc.io/doc/org.java-websocket/Java-WebSocket/1.3.8
-
+// TODO: 4/28/2018 consider encrypting JSONobject sent as bytes using Jackson API with wss
 public class JSONWebSocketClient extends WebSocketClient /*implements Runnable*/ {
     private Context context;
     private JSONObject servermessage;
     private JSONWebSocketClientListener listener;
-
-    /*public JSONWebSocketClient(URI serverURI) {
-        super(serverURI);
-    }*/
 
     public JSONWebSocketClient(String host, int port, Context context, JSONWebSocketClientListener listener) throws URISyntaxException {
         super(new URI("ws://" + host + ":" + Integer.toString(port)));
         this.context = context;
         this.listener = listener;
     }
-
-    //connect() and connectBlocking() start in background thread
 
     @Override
     public void onOpen(ServerHandshake handshakedata) {
@@ -50,7 +44,6 @@ public class JSONWebSocketClient extends WebSocketClient /*implements Runnable*/
             e.printStackTrace();
         }
         this.sendJSON(registerdevice);
-        // TODO: 4/1/2018 device is not registering once 'connected', need to send once connected 
     }
 
     @Override
@@ -74,6 +67,7 @@ public class JSONWebSocketClient extends WebSocketClient /*implements Runnable*/
 
     @Override
     public void onError(Exception ex) {
+        //Error logging
         if(ex instanceof JSONException)
         {
             Log.e("ClientException", "JSONException");
@@ -86,9 +80,9 @@ public class JSONWebSocketClient extends WebSocketClient /*implements Runnable*/
 
     }
 
+    //send stringified JSON in plain text
     public void sendJSON(JSONObject jsonObject)
     {
-        //send string of json
         String stringjson = jsonObject.toString();
         this.send(stringjson);
 

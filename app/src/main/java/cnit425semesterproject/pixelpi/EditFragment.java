@@ -1,6 +1,7 @@
 package cnit425semesterproject.pixelpi;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,19 +23,22 @@ import java.util.ArrayList;
  * Created by jackb on 4/16/2018.
  */
 
+//Fragment used to edit each individual device
+// TODO: 4/28/2018 consider changing name
 public class EditFragment extends Fragment implements DeviceTaskCallback {
+    //ui
     private View rootview;
     private View footerview;
     private TextView txtdevicenameedit;
     private ListView lvdevicetasks;
     private ImageView imgplus;
-
     private DeviceTaskAdapter deviceTaskAdapter;
     private ArrayList<DeviceTask> deviceTasks;
+
+    //other variables
     private Device selecteddevice;
     private String mode;
-
-    public static String EDIT_FRAGMENT = "edit";
+    private EditFragmentListener listener; // TODO: 4/28/2018 Use functions
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,7 +89,7 @@ public class EditFragment extends Fragment implements DeviceTaskCallback {
                                 switch (mode) {
                                     case "display": DisplayDialog displaydialog = DisplayDialog.newInstance();
                                         displaydialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_Fullscreen);
-                                        displaydialog.show(getFragmentManager(), DisplayDialog.DISPLAY_DIALOG);
+                                        displaydialog.show(getFragmentManager(), getString(R.string.DISPLAY_DIALOG));
                                         dialogInterface.dismiss();
                                         break;
                                     case "timer": AlertDialog.Builder timerdialog = new AlertDialog.Builder(getActivity());
@@ -99,6 +103,7 @@ public class EditFragment extends Fragment implements DeviceTaskCallback {
                             }
                         }
                     });
+                    //set onCancel event
                     selecttypedialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                         @Override
                         public void onCancel(DialogInterface dialogInterface) {
@@ -127,6 +132,17 @@ public class EditFragment extends Fragment implements DeviceTaskCallback {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            listener = (EditFragmentListener) context;
+        }
+        catch (ClassCastException ex) {
+            throw new ClassCastException(context.toString());
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         if(rootview.getParent() != null) {
             ((ViewGroup)rootview.getParent()).removeView(rootview);
@@ -150,6 +166,7 @@ public class EditFragment extends Fragment implements DeviceTaskCallback {
         return selecteddevice;
     }
 
+    //sets up Fragment
     public void setSelecteddevice(Device selecteddevice) {
         this.selecteddevice = selecteddevice;
         txtdevicenameedit.setText("Device: " + selecteddevice.getDevicename());

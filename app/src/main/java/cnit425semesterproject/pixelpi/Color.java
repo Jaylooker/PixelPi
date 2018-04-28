@@ -1,12 +1,16 @@
 package cnit425semesterproject.pixelpi;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by jackb on 4/22/2018.
  */
 
-public class Color {
+//Own implementation of color to store RGB values and convert to int when displaying as color for blankcolor.png
+// TODO: 4/24/2018 consider extending android.graphics.Color
+public class Color implements JSON {
     private int red;
     private int green;
     private int blue;
@@ -54,15 +58,30 @@ public class Color {
         this.blue = blue;
     }
 
-    public void toJSON()
+    @Override
+    public JSONObject toJSON()
     {
-        //// TODO: 4/23/2018 made to JSON function implement in displaytask
-        /*
-        JSONArray colorarray = new JSONArray();
-        colorarray.put(0, red);
-        colorarray.put(1, green);
-        colorarray.put(2, blue);
-        */
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = this.toJSONArray();
+        try {
+            jsonObject.put("colors", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+    public JSONArray toJSONArray() {
+        JSONArray jsonArray = new JSONArray();
+        try {
+            jsonArray.put(0, this.red);
+            jsonArray.put(1, this.green);
+            jsonArray.put(2, this.blue);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonArray;
+
     }
 
 }

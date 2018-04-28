@@ -14,16 +14,18 @@ import android.widget.EditText;
  * Created by jackb on 4/15/2018.
  */
 
+//Fragment used to connect app client to server (client object is stored in MainActivity)
 public class SettingsFragment extends Fragment {
 
+    //ui
     private View rootview;
-    private EditText url;
-    private EditText port;
+    private EditText txturl;
+    private EditText txtport;
     private Button btnconnect;
     private Button btndisconnect;
-    private SettingsFragmentListener listener;
 
-    public static String SETTINGS_FRAGMENT = "settings";
+    //other variables
+    private SettingsFragmentListener listener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -31,21 +33,23 @@ public class SettingsFragment extends Fragment {
         if(rootview == null) {
             rootview = inflater.inflate(R.layout.settings_layout, container, false);
             //ui references
-            url = rootview.findViewById(R.id.txturl);
-            port = rootview.findViewById(R.id.txtport);
+            txturl = rootview.findViewById(R.id.txturl);
+            txtport = rootview.findViewById(R.id.txtport);
             btnconnect = rootview.findViewById(R.id.btnconnect);
             btndisconnect = rootview.findViewById(R.id.btndisconnect);
 
+            //connect event callback to MainActivity
             btnconnect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String tempurl = url.getText().toString();
-                    int tempport = Integer.valueOf(port.getText().toString()); //only can input numbers
+                    String tempurl = txturl.getText().toString();
+                    int tempport = Integer.valueOf(txtport.getText().toString()); //only can input numbers
 
                     listener.connect(tempurl, tempport);
                 }
             });
 
+            //disconnect event callback to MainActivity
             btndisconnect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -54,19 +58,14 @@ public class SettingsFragment extends Fragment {
             });
 
             //testing autofill
-            String strurl = "192.168.0.106";
+            /*String strurl = "192.168.0.106";
             int intport = 9000;
-            url.setText(strurl);
-            port.setText(String.valueOf(intport));
+            txturl.setText(strurl);
+            txtport.setText(String.valueOf(intport));*/
             //testing autofill
-
-
-
         }
 
         return rootview;
-
-
     }
 
     @Override

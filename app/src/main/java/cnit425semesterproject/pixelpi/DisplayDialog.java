@@ -24,23 +24,25 @@ import java.util.ArrayList;
  * Created by jackb on 4/21/2018.
  */
 
+//Display dialog used to pick which device task to make and by extension what dialog to display next
+// TODO: 4/28/2018 consider changing name
 public class DisplayDialog extends DialogFragment {
-    private DisplayTask displayTask;
-    private DeviceTaskCallback callback;
-    private ArrayList<Color> colors;
-    private ColorAdapter colorAdapter;
-    private ColorPickerDialogFragment colorPickerDialogFragment;
 
+    //ui elements
     private View rootview;
     private View footer;
     private Button btncancel;
     private Button btndone;
     private EditText txtdisplaytaskname;
     private ImageView imgplus;
-
     private ListView lvcolors;
+    private ColorAdapter colorAdapter;
 
-    public static String DISPLAY_DIALOG = "display";
+    //other elements
+    private DisplayTask displayTask;
+    private DeviceTaskCallback callback;
+    private ArrayList<Color> colors;
+    private ColorPickerDialogFragment colorPickerDialogFragment;
 
     public DisplayDialog() {
         //do not use to construct dialog
@@ -96,7 +98,10 @@ public class DisplayDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //launch color dialog
-                //colorPickerDialogFragment = new ColorPickerDialogFragment();
+                colorPickerDialogFragment = new ColorPickerDialogFragment();
+                //android.graphics.Color color = new android.graphics.Color();
+                colorPickerDialogFragment.newInstance(0, "Choose a color", "Ok" , /*color int */0, true);
+                //colorPickerDialogFragment
                 //colorPickerDialogFragment.show(getFragmentManager(), "color dialog"); // TODO: 4/21/2018 fingure out .show
                 Color color = new Color(0,0,0);
                 colors.add(color);
@@ -132,8 +137,8 @@ public class DisplayDialog extends DialogFragment {
         });
 
         //testing
-        String dummytask = "dummytask";
-        txtdisplaytaskname.setText(dummytask);
+        //String dummytask = "dummytask";
+        //txtdisplaytaskname.setText(dummytask);
         //testing
         return rootview;
 

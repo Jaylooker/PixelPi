@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- fragment tags -->
+    <string name="SETTINGS_FRAGMENT">settings</string>
+    <string name="EDIT_FRAGMENT">edit</string>
+    <string name="DEVICES_FRAGMENT">devices</string>
+    <!-- dialog tags -->
+    <string name="DISPLAY_DIALOG">"display"</string>
+
+    <!--device task modes-->
+    <string name="NO_MODE">none</string>
+    <string name="SIMPLE">simple</string>
+    <string name="TIMER">timer</string>
+    <string name="SHIMMER">shimmer</string>
+</resources>

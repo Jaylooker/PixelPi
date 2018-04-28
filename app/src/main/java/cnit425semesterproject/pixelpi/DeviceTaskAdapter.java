@@ -20,6 +20,7 @@ import java.util.zip.Inflater;
  * Created by jackb on 4/21/2018.
  */
 
+//Custom Adapter for Device Tasks
 public class DeviceTaskAdapter extends ArrayAdapter {
 
     private View rootview;

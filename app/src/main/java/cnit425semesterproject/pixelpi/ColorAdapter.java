@@ -23,10 +23,11 @@ import java.util.ArrayList;
  * Created by jackb on 4/21/2018.
  */
 
+//Custom ArrayAdapter for Colors, used in DisplayDialog for each color
 public class ColorAdapter extends ArrayAdapter<Color> {
 
     private ArrayList<Color> colors;
-    private static Color color;
+    private static Color color; //static for reuse of reference
 
     public ColorAdapter(Context context, ArrayList<Color> colors) {
         super(context, 0, colors);
@@ -47,7 +48,7 @@ public class ColorAdapter extends ArrayAdapter<Color> {
         //ImageView imageView = convertView.findViewById(R.id.imgcolor);
         //imageView.setBackgroundColor(color.toint());
 
-        //using 2
+        //using layout_2
         final EditText txtred = convertView.findViewById(R.id.txtred);
         final EditText txtgreen = convertView.findViewById(R.id.txtgreen);
         final EditText txtblue = convertView.findViewById(R.id.txtblue);
@@ -144,7 +145,7 @@ public class ColorAdapter extends ArrayAdapter<Color> {
             }
         });
 
-        //using 2
+        //using layout_2
 
         // TODO: 4/21/2018 Set color of imageview
 

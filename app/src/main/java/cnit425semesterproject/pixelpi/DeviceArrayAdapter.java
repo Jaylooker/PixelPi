@@ -17,8 +17,8 @@ import java.util.ArrayList;
  * Created by jackb on 3/28/2018.
  */
 
+//Custom Array adapter for devices
 public class DeviceArrayAdapter extends ArrayAdapter {
-    // TODO: finish custom ArrayAdapter
 
     private ArrayList<Device> devices;
 

@@ -1,6 +1,5 @@
 package cnit425semesterproject.pixelpi;
 
-
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -13,11 +12,11 @@ import java.util.ArrayList;
  * Created by jackb on 3/28/2018.
  */
 
-public class Device {
-    private String devicename;
-    private String devicecode;
-    private ArrayList<DeviceTask> deviceTasks;
-    // TODO: figure out attributes
+//Device class for Devices recieved from server. Devices persist on server's database.
+public class Device implements JSON {
+    private String devicename; // name of device, will be editable
+    private String devicecode; // unique identifier used by server
+    private ArrayList<DeviceTask> deviceTasks; //device tasks that have been created
 
     //getter and setters
     public String getDevicename() {
@@ -56,13 +55,14 @@ public class Device {
         this.devicecode = devicecode;
     }
 
-    public Device(String devicename) { //for testing
+    //for testing and creating loading new device
+    public Device(String devicename) {
         this.devicename = devicename;
         this.devicecode = devicename;
         this.deviceTasks = new ArrayList();
     }
 
-    public Device(JSONObject jsonObject) //problem area
+    public Device(JSONObject jsonObject)
     {
         Log.i("JSON Device", jsonObject.toString());
         ArrayList<DeviceTask> deviceTasks = new ArrayList<>();
@@ -88,8 +88,25 @@ public class Device {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
 
-
-
+    //interfaces
+    @Override
+    public JSONObject toJSON() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("device name", this.devicename);
+            jsonObject.put("device code", this.devicecode);
+            JSONArray jsonArray = new JSONArray();
+            int i = 0;
+            for (DeviceTask  deviceTask: this.deviceTasks) {
+                jsonArray.put(i, deviceTask.toJSON());
+                i++;
+            }
+            jsonObject.put("tasks", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 }
