@@ -17,8 +17,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+// TODO: 4/28/2018 For future:
+/*
+Extract all string resources in preparation for possible localization
+Resolve warnings that warrant change
+Add Copyright to each file
+Improve UI look with some type of theme
+Fix display for display_dialog_layout
+Make layouts scale to fit different screen sizes
+Add JUnit tests for domain logic, tools, and UI interactions (Espresso)
+Update Readme
+Add server/client (python) code to repo in folder at level of Android app
+ */
 
-/*holds instance of client and communicates between fragments */
+/*Holds instance of client and communicates between fragments.
+  Fragments are android.support.v4.app.Fragment which are only supported by API 11+ instead
+  on android.app.Fragment which is older and original implementation.
+  Edit button not in use. May be replaced by another button to different fragment
+* */
 public class MainActivity extends AppCompatActivity implements SettingsFragmentListener, DeviceFragmentListener, EditFragmentListener, DeviceTaskCallback {
 
     private ImageButton btndevices;
