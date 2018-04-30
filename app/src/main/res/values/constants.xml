@@ -12,4 +12,9 @@
     <string name="SIMPLE">simple</string>
     <string name="TIMER">timer</string>
     <string name="SHIMMER">shimmer</string>
+
+    <!-- Device code prefixes -->
+    <string name="NP">NP</string>
+    <string name="N1">N1</string>
+    <string name="FIFTY">50</string>
 </resources>

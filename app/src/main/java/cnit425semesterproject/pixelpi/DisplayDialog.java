@@ -128,7 +128,7 @@ public class DisplayDialog extends DialogFragment {
                 //update adapter
                 colorAdapter.notifyDataSetChanged();
                 //create task to send to server
-                displayTask = new DisplayTask(taskname, colorAdapter.getColors());
+                displayTask = new DisplayTask(taskname, colorAdapter.getColors(), getActivity().getApplicationContext());
                 //callback to server
                 callback.sendnewdevicetask(displayTask);
                 //dismiss dialog

@@ -1,5 +1,6 @@
 package cnit425semesterproject.pixelpi;
 
+import android.content.Context;
 import android.support.v4.app.Fragment; //API 11+ required
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -109,8 +110,8 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
         // TODO: 4/14/2018 Hide Fragments when switching between them 
 
         //define host and port for testing
-        final String url = "192.168.0.106";
-        final int port = 9000;
+        //final String url = "192.168.0.106";
+        //final int port = 9000;
 
         //define listener
         JSONclientlistener = new JSONWebSocketClientListener() {

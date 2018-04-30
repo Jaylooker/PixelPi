@@ -1,5 +1,6 @@
 package cnit425semesterproject.pixelpi;
 
+import android.content.Context;
 import android.content.res.Resources;
 
 import org.json.JSONArray;
@@ -18,14 +19,14 @@ public class DisplayTask extends DeviceTask {
 
     private ArrayList<Color> colors; //colors that determine the repeating pattern
 
-    public DisplayTask(String mode, String name, int id, boolean activated, ArrayList<Color> colors) {
-        super(mode, name, id, activated);
+    public DisplayTask(String mode, String name, int id, boolean activated, ArrayList<Color> colors, Context context) {
+        super(mode, name, id, activated, context);
         this.colors = colors;
     }
 
-    public DisplayTask(String name, ArrayList<Color> colors) {
-        super(name);
-        this.mode = Resources.getSystem().getString(R.string.SIMPLE);
+    public DisplayTask(String name, ArrayList<Color> colors, Context context) {
+        super(name, context);
+        this.mode = context.getString(R.string.SIMPLE);
         this.colors = colors;
         //this.activated = false;
     }
