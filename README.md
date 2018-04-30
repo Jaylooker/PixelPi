@@ -15,13 +15,20 @@ IoT Android Application that controls NeoPixel devices
 
 ## Build With
 
+Android Studio
+
 ## Versioning
 
 ## Authors
+
+[Jack Bartolone] (https://github.com/Jaylooker) and [Ben Osborne] (https://github.com/osborn14) 
 
 ## License
 
 MIT License
 
 ## Acknowledgements
+
++ Autobahn 
++ Twisted
 
