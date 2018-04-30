@@ -21,7 +21,7 @@ Android Studio
 
 ## Authors
 
-[Jack Bartolone] (https://github.com/Jaylooker) and [Ben Osborne] (https://github.com/osborn14) 
+[Jack Bartolone](https://github.com/Jaylooker) and [Ben Osborne](https://github.com/osborn14) 
 
 ## License
 
