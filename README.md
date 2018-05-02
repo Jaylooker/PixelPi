@@ -58,9 +58,14 @@ Run the Android application. Click on the gear icon. Input your the IP Address a
 Run the server, then the client.  They can be run by the command: ```sudo python3 <your file name and path>```
 Alternatively, the server and client can both be run on startup by means of the .bashrc file.  This file can be edited on Raspbian by using the command: ```sudo nano /home/pi/.bashrc``` 
 
-## Build With
+## Built With
 
-Android Studio
+Gradle - Android build tool 
+
+## Coding Environments
+
+- IDLE - Python
+- Android Studio - Java
 
 ## Versioning
 
