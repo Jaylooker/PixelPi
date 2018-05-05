@@ -9,14 +9,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingRight="5dp"
-        android:text="[Mode]"
+        android:text="@string/txtmode"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/txttaskname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="[Task Name]"
+        android:text="@string/txttaskname"
         android:textSize="24sp"
         android:paddingRight="5dp"/>
 
@@ -29,6 +29,6 @@
         android:id="@+id/btnedittask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit" />
+        android:text="@string/btnedit" />
 
 </LinearLayout>

@@ -7,7 +7,7 @@
         android:id="@+id/txtdevicenameedit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="[Device Name]"
+        android:text="@string/txteditdevicename"
         android:textAlignment="center"
         android:textSize="24sp" />
 

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.github.danielnilsson9.colorpickerview.dialog.ColorPickerDialogFragment;
-import com.github.danielnilsson9.colorpickerview.view.ColorPanelView;
 
 import java.util.ArrayList;
 
@@ -26,32 +24,32 @@ import java.util.ArrayList;
 
 //Display dialog used to pick which device task to make and by extension what dialog to display next
 // TODO: 4/28/2018 consider changing name
-public class DisplayDialog extends DialogFragment {
+public class SimpleDialog extends DialogFragment {
 
     //ui elements
     private View rootview;
     private View footer;
     private Button btncancel;
     private Button btndone;
-    private EditText txtdisplaytaskname;
+    private EditText txtsimpletaskname;
     private ImageView imgplus;
     private ListView lvcolors;
     private ColorAdapter colorAdapter;
 
     //other elements
-    private DisplayTask displayTask;
+    private SimpleTask simpleTask;
     private DeviceTaskCallback callback;
     private ArrayList<Color> colors;
     private ColorPickerDialogFragment colorPickerDialogFragment;
 
-    public DisplayDialog() {
+    public SimpleDialog() {
         //do not use to construct dialog
     }
 
     //constructor method
-    public static DisplayDialog newInstance() {
+    public static SimpleDialog newInstance() {
         Bundle args = new Bundle();
-        DisplayDialog fragment = new DisplayDialog();
+        SimpleDialog fragment = new SimpleDialog();
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,14 +66,14 @@ public class DisplayDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(rootview == null) {
-            rootview = inflater.inflate(R.layout.display_dialog_layout, container, false);
+            rootview = inflater.inflate(R.layout.simple_dialog_layout, container, false);
         }
 
         //get ui reference
         lvcolors = rootview.findViewById(R.id.lvcolors);
         btncancel = rootview.findViewById(R.id.btncancel);
         btndone = rootview.findViewById(R.id.btndone);
-        txtdisplaytaskname = rootview.findViewById(R.id.txtdisplaytaskname);
+        txtsimpletaskname = rootview.findViewById(R.id.txtsimpletaskname);
         colorAdapter = new ColorAdapter(getActivity(), colors);
         //footer
         footer = inflater.inflate(R.layout.listview_plus_footer, container, false);
@@ -124,13 +122,13 @@ public class DisplayDialog extends DialogFragment {
             @Override
             public void onClick(View view) {
                 //once oked callback data to send to server
-                String taskname = txtdisplaytaskname.getText().toString();
+                String taskname = txtsimpletaskname.getText().toString();
                 //update adapter
                 colorAdapter.notifyDataSetChanged();
                 //create task to send to server
-                displayTask = new DisplayTask(taskname, colorAdapter.getColors(), getActivity().getApplicationContext());
+                simpleTask = new SimpleTask(taskname, colorAdapter.getColors(), getActivity().getApplicationContext());
                 //callback to server
-                callback.sendnewdevicetask(displayTask);
+                callback.sendnewdevicetask(simpleTask);
                 //dismiss dialog
                 getDialog().dismiss();
             }
@@ -138,7 +136,7 @@ public class DisplayDialog extends DialogFragment {
 
         //testing
         //String dummytask = "dummytask";
-        //txtdisplaytaskname.setText(dummytask);
+        //txtsimpletaskname.setText(dummytask);
         //testing
         return rootview;
 

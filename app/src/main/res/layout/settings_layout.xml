@@ -14,7 +14,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="URL:"
+            android:text="@string/txturl"
             android:textSize="24sp" />
 
         <EditText
@@ -34,7 +34,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Port:"
+            android:text="@string/btnport"
             android:textSize="24sp" />
 
         <EditText
@@ -54,13 +54,13 @@
             android:id="@+id/btnconnect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Connect" />
+            android:text="@string/btnconnect" />
 
         <Button
             android:id="@+id/btndisconnect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Disconnect" />
+            android:text="@string/btndisconnect" />
     </LinearLayout>
 
 </LinearLayout>

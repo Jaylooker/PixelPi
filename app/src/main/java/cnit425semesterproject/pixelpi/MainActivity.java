@@ -1,6 +1,5 @@
 package cnit425semesterproject.pixelpi;
 
-import android.content.Context;
 import android.support.v4.app.Fragment; //API 11+ required
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +11,9 @@ import android.widget.Toast;
 
 import org.json.*;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 // TODO: 4/28/2018 For future:
 /*
@@ -24,7 +21,7 @@ Extract all string resources in preparation for possible localization
 Resolve warnings that warrant change
 Add Copyright to each file
 Improve UI look with some type of theme
-Fix display for display_dialog_layout
+Fix display for simple_dialog_layout
 Make layouts scale to fit different screen sizes
 Add JUnit tests for domain logic, tools, and UI interactions (Espresso)
 Update Readme
@@ -330,7 +327,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
         //sending devticetask for now
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("cmd", "DISPLAY");
+            jsonObject.put("cmd", "SIMPLE"); //updated to simple
             jsonObject.put("send to", selecteddevice.getDevicecode()); //work on adding device code
             jsonObject.put("mode", deviceTask.getMode());
             /*
@@ -340,9 +337,9 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
             }
             */ //use switch, constants messing things up
             if(deviceTask.getMode().equals(getString(R.string.SIMPLE))) {
-                DisplayTask displayTask = (DisplayTask) deviceTask;
-                //jsonObject.put("task", displayTask.toJSON());
-                jsonObject = merge(jsonObject, displayTask.toJSON());
+                SimpleTask simpleTask = (SimpleTask) deviceTask;
+                //jsonObject.put("task", simpleTask.toJSON());
+                jsonObject = merge(jsonObject, simpleTask.toJSON());
             }
 
 

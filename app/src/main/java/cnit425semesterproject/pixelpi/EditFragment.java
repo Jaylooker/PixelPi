@@ -10,8 +10,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -87,9 +85,9 @@ public class EditFragment extends Fragment implements DeviceTaskCallback {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             if(mode != null) {
                                 switch (mode) {
-                                    case "display": DisplayDialog displaydialog = DisplayDialog.newInstance();
-                                        displaydialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_Fullscreen);
-                                        displaydialog.show(getFragmentManager(), getString(R.string.DISPLAY_DIALOG));
+                                    case "simple": SimpleDialog simpledialog= SimpleDialog.newInstance();
+                                        simpledialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_Fullscreen);
+                                        simpledialog.show(getFragmentManager(), getString(R.string.SIMPLE_DIALOG));
                                         dialogInterface.dismiss();
                                         break;
                                     case "timer": AlertDialog.Builder timerdialog = new AlertDialog.Builder(getActivity());

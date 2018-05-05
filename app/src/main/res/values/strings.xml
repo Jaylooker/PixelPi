@@ -1,8 +1,23 @@
 <resources>
     <string name="app_name">PixelPi</string>
+    <string name="txtdevicename">[Device Name]</string>
+    <string name="btnedit">Edit</string>
+    <string name="txtmode">[Mode]</string>
+    <string name="txttaskname">[Task Name]</string>
+    <string name="txtdisplaytaskfor">Display Task for:</string>
+    <string name="btncancel">Cancel</string>
+    <string name="btndone">Done</string>
+    <string name="txtdevicetaskname">Name:</string>
+    <string name="txtpickrepeatcolor">Pick a color pattern to repeat:</string>
+    <string name="txteditdevicename">[Device Name]</string>
+    <string name="txturl">URL:</string>
+    <string name="btnconnect">Connect</string>
+    <string name="btndisconnect">Disconnect</string>
+    <string name="btnport">Port:</string>
 
     <string-array name="devicemodes">
-        <item>display</item>
-        <item>timer</item>
+        <item>@string/SIMPLE</item>
+        <item>@string/TIMER</item>
+        <item>@string/SHIMMER</item>
         </string-array>
 </resources>

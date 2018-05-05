@@ -5,7 +5,7 @@ package cnit425semesterproject.pixelpi;
  */
 
 //Call for display dialog that will update the addition of a new device task to the selected device
-// (Task specific Dialog) -> DisplayDialog -> EditFragment -> MainActivity
+// (Task specific Dialog) -> SimpleDialog -> EditFragment -> MainActivity
 public interface DeviceTaskCallback {
     void sendnewdevicetask(DeviceTask deviceTask);
 }

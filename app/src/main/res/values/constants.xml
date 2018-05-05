@@ -5,7 +5,7 @@
     <string name="EDIT_FRAGMENT">edit</string>
     <string name="DEVICES_FRAGMENT">devices</string>
     <!-- dialog tags -->
-    <string name="DISPLAY_DIALOG">"display"</string>
+    <string name="SIMPLE_DIALOG">simple</string>
 
     <!--device task modes-->
     <string name="NO_MODE">none</string>

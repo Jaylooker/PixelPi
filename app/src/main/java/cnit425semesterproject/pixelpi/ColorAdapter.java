@@ -1,21 +1,13 @@
 package cnit425semesterproject.pixelpi;
 
 import android.content.Context;
-import android.graphics.ColorFilter;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.method.KeyListener;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -23,7 +15,7 @@ import java.util.ArrayList;
  * Created by jackb on 4/21/2018.
  */
 
-//Custom ArrayAdapter for Colors, used in DisplayDialog for each color
+//Custom ArrayAdapter for Colors, used in SimpleDialog for each color
 public class ColorAdapter extends ArrayAdapter<Color> {
 
     private ArrayList<Color> colors;
@@ -40,9 +32,9 @@ public class ColorAdapter extends ArrayAdapter<Color> {
 
         if (convertView == null)
         {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.display_color_layout_2, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.color_layout_2, parent, false);
         }
-        //using display_color_layout_2 for now, will switch to display_color_layout
+        //using color_layout_2 for now, will switch to color_layout
 
         //set image to color
         //ImageView imageView = convertView.findViewById(R.id.imgcolor);
