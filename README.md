@@ -75,7 +75,7 @@ Gradle - Android build tool
 
 ## License
 
-MIT License
+[MIT License](LICENSE.md)
 
 ## Acknowledgements
 
