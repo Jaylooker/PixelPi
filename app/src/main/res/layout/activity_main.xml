@@ -19,13 +19,6 @@
             android:layout_weight="1"
             app:srcCompat="@drawable/devices" />
 
-       <!-- <ImageButton
-            android:id="@+id/btnedit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/edit" /> -->
-
         <ImageButton
             android:id="@+id/btnsettings"
             android:layout_width="wrap_content"

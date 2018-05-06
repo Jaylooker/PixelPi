@@ -48,11 +48,16 @@ public class EditFragment extends Fragment implements DeviceTaskCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if(rootview == null) {
-            rootview = inflater.inflate(R.layout.edit_layout, null, false);
-            footerview = inflater.inflate(R.layout.listview_plus_footer, null, false);
+            rootview = inflater.inflate(R.layout.edit_layout, container, false);
+            footerview = inflater.inflate(R.layout.listview_plus_footer, null, false); //set to llplusfooter linear layout
 
             txtdevicenameedit = rootview.findViewById(R.id.txtdevicenameedit);
             imgplus = footerview.findViewById(R.id.imgplus);
+            lvdevicetasks = rootview.findViewById(R.id.lvdevicetasks);
+
+            deviceTaskAdapter = new DeviceTaskAdapter(getActivity(), deviceTasks);
+            lvdevicetasks.addFooterView(footerview); //adding footer before setting adapter
+            lvdevicetasks.setAdapter(deviceTaskAdapter);
 
             // adding new device task
             imgplus.setOnClickListener(new View.OnClickListener() { 
@@ -67,7 +72,6 @@ public class EditFragment extends Fragment implements DeviceTaskCallback {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             //once chosen
                             String[] list = getResources().getStringArray(R.array.devicemodes);
-                            //list.addAll();
                             //type of device task
                             mode = list[i];
                         }
@@ -121,15 +125,6 @@ public class EditFragment extends Fragment implements DeviceTaskCallback {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        deviceTaskAdapter = new DeviceTaskAdapter(getActivity(), deviceTasks);
-        lvdevicetasks = getView().findViewById(R.id.lvdevicetasks);
-        lvdevicetasks.addFooterView(footerview); //adding footer before setting adapter
-        lvdevicetasks.setAdapter(deviceTaskAdapter);
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
@@ -152,11 +147,12 @@ public class EditFragment extends Fragment implements DeviceTaskCallback {
     //update device tasks, send back to main activity
     @Override
     public void sendnewdevicetask(DeviceTask deviceTask) {
-        //todo: not not updating
         ArrayList<DeviceTask> deviceTasks = selecteddevice.getDeviceTasks();
         deviceTasks.add(deviceTask);
         selecteddevice.setDeviceTasks(deviceTasks);
         deviceTaskAdapter.notifyDataSetChanged();
+        listener.updatedevice(selecteddevice);
+        listener.activatedevicetask(deviceTask);
     }
 
     //getters and setters

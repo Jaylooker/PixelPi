@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
         //ui
         btndevices = (ImageButton) findViewById(R.id.btndevices);
         btnsettings = (ImageButton) findViewById(R.id.btnsettings);
-       // btnedit = (ImageButton) findViewById(R.id.btnedit);
 
         //other variables
         selecteddevice = new Device();
@@ -162,13 +161,6 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
             public void onClick(View view) {switchfragto(settingsfragment);
             }
         });
-
-      /*  btnedit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchfragto(editfragment);
-            }
-        }); */
 
     }
 
