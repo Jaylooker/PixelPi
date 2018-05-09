@@ -51,7 +51,6 @@ Move the PixelPi folder to a suitable location on the RPi.  For the client, adju
 Use Case:
 Run the Android application. Click on the gear icon. Input your the IP Address and port. Click on the list icon to view devices received from the server. Click on a device. Click on the plus symbol to add a task. Choose display, then click next. Input RGB values for color each. To add a color, click the plus symbol. When finished selecting colors, click the Done button (not keyboard). The colors of the NeoPixel device should change. 
 
-#### Break down into end to end tests
 
 ### Deployment
 
@@ -79,6 +78,7 @@ Gradle - Android build tool
 
 ## Acknowledgements
 
-+ Autobahn 
-+ Twisted
++ [Autobahn](https://autobahn.readthedocs.io/en/latest/) - Python server/client Websocket 
++ [Twisted](https://twistedmatrix.com/) - Python server/client Module
++ [Jackson](https://github.com/FasterXML/jackson) - Java JSON library
 

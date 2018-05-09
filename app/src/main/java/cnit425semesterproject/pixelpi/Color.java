@@ -1,8 +1,15 @@
 package cnit425semesterproject.pixelpi;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.io.IOException;
 
 /**
  * Created by jackb on 4/22/2018.
@@ -10,7 +17,10 @@ import org.json.JSONObject;
 
 //Own implementation of color to store RGB values and convert to int when displaying as color for blankcolor.png
 // TODO: 4/24/2018 consider extending android.graphics.Color
-public class Color implements JSON {
+@JsonSerialize(using = JSONColorSerialize.class)
+@JsonDeserialize(using = JSONColorDeserialize.class)
+public class Color {
+    //make get only values of fields recognized
     private int red;
     private int green;
     private int blue;
@@ -20,6 +30,11 @@ public class Color implements JSON {
     {
         int color = android.graphics.Color.rgb(red, green, blue);
         return color;
+    }
+
+    public int[] toarray()
+    {
+        return new int[]{this.red, this.green, this.blue};
     }
 
     //getters and setters
@@ -57,31 +72,21 @@ public class Color implements JSON {
         this.green = green;
         this.blue = blue;
     }
+}
+
+//helper classes
+class JSONColorSerialize extends JsonSerializer<Color> {
+    @Override
+    public void serialize(Color value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        value.toarray();
+    }
+
+}
+
+class JSONColorDeserialize extends JsonDeserializer<Color> {
 
     @Override
-    public JSONObject toJSON()
-    {
-        JSONObject jsonObject = new JSONObject();
-        JSONArray jsonArray = this.toJSONArray();
-        try {
-            jsonObject.put("colors", jsonArray);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonObject;
+    public Color deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+        return null;
     }
-
-    public JSONArray toJSONArray() {
-        JSONArray jsonArray = new JSONArray();
-        try {
-            jsonArray.put(0, this.red);
-            jsonArray.put(1, this.green);
-            jsonArray.put(2, this.blue);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonArray;
-
-    }
-
 }

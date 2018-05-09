@@ -9,23 +9,22 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.json.*;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 // TODO: 4/28/2018 For future:
 /*
-Extract all string resources in preparation for possible localization
-Resolve warnings that warrant change
 Add Copyright to each file
-Improve UI look with some type of theme
-Fix display for simple_dialog_layout
-Make layouts scale to fit different screen sizes
-Add JUnit tests for domain logic, tools, and UI interactions (Espresso)
 Update Readme
-Add server/client (python) code to repo in folder at level of Android app
+
  */
 
 /*Holds instance of client and communicates between fragments.
@@ -37,10 +36,10 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
 
     private ImageButton btndevices;
     private ImageButton btnsettings;
-  //  private ImageButton btnedit;
     private DeviceFragment devicefragment;
     private SettingsFragment settingsfragment;
     private EditFragment editfragment;
+    private ObjectMapper objectMapper;
     private boolean connected;
     private JSONWebSocketClient client;
     private JSONWebSocketClientListener JSONclientlistener;
@@ -62,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
         //other variables
         selecteddevice = new Device();
         devices = new ArrayList<>();
+        objectMapper = new ObjectMapper();
         connected = false;
 
         //testing passing device to fragment
@@ -125,13 +125,19 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
                                 for (int i = 0; i < jsondevices.length(); i++)
                                 {
                                     JSONObject jsondevice = jsondevices.getJSONObject(i);
-                                    Device device = new Device(jsondevice);
+                                    Device device = objectMapper.readValue(jsondevice.toString(), Device.class);
                                     devices.add(device);
                                 }
                                     Log.i("Server device amount", String.valueOf(devices.size()));
                                     //update devices
                                     devicefragment.updatedevices(devices);
                             } catch (JSONException e) {
+                                e.printStackTrace();
+                            } catch (JsonParseException e) {
+                                e.printStackTrace();
+                            } catch (JsonMappingException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
                                 e.printStackTrace();
                             }
 
@@ -305,8 +311,18 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
 
     @Override
     public void activatedevicetask(DeviceTask deviceTask) {
+        //set device task to activated
+        //
         //send device task as JSON
-        client.sendJSON(deviceTask.toJSON());
+       /* JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject = objectMapper.
+        }
+        catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+        client.sendJSON(jsonObject);
+        */
     }
 
     //Display Dialog
@@ -331,7 +347,15 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
             if(deviceTask.getMode().equals(getString(R.string.SIMPLE))) {
                 SimpleTask simpleTask = (SimpleTask) deviceTask;
                 //jsonObject.put("task", simpleTask.toJSON());
-                jsonObject = merge(jsonObject, simpleTask.toJSON());
+                /*JSONObject simplejson = new JSONObject();
+                try {
+                    objectMapper. //simpleTask
+                }
+                catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
+                jsonObject = merge(jsonObject, simplejson);
+                */
             }
 
 

@@ -1,11 +1,8 @@
 package cnit425semesterproject.pixelpi;
 
-import android.util.Log;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import java.net.URI;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 
 /**
@@ -13,9 +10,12 @@ import java.util.ArrayList;
  */
 
 //Device class for Devices recieved from server. Devices persist on server's database.
-public class Device implements JSON {
+public class Device {
+    @JsonProperty("device name")
     private String devicename; // name of device, will be editable
+    @JsonProperty("device code")
     private String devicecode; // unique identifier used by server
+
     private ArrayList<DeviceTask> deviceTasks; //device tasks that have been created
 
     //getter and setters
@@ -27,6 +27,7 @@ public class Device implements JSON {
         this.devicename = devicename;
     }
 
+    @JsonGetter("tasks") //get when receiving
     public String getDevicecode() {
         return devicecode;
     }
@@ -39,6 +40,7 @@ public class Device implements JSON {
         return deviceTasks;
     }
 
+    @JsonIgnore //ignore when sending
     public void setDeviceTasks(ArrayList<DeviceTask> deviceTasks) {
         this.deviceTasks = deviceTasks;
     }
@@ -59,54 +61,7 @@ public class Device implements JSON {
     public Device(String devicename) {
         this.devicename = devicename;
         this.devicecode = devicename;
-        this.deviceTasks = new ArrayList();
+        this.deviceTasks = new ArrayList<>();
     }
 
-    public Device(JSONObject jsonObject)
-    {
-        Log.i("JSON Device", jsonObject.toString());
-        ArrayList<DeviceTask> deviceTasks = new ArrayList<>();
-        String devicecode = "";
-
-        try
-        {
-            devicecode = jsonObject.getString("device code"); //id for device code placeholder
-
-            if (jsonObject.has("tasks")) { //check if has tasks
-                JSONArray tasks = jsonObject.getJSONArray("tasks");
-                for (int i = 0; i < tasks.length(); i++)
-                {
-                    JSONObject taskjson = tasks.getJSONObject(i);
-                    DeviceTask deviceTask = new DeviceTask(taskjson); //check instanceof and absract devicetask
-                    deviceTasks.add(deviceTask);
-                }
-            }
-            this.devicename = devicecode;
-            this.devicecode = devicecode;
-            this.deviceTasks = deviceTasks;
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //interfaces
-    @Override
-    public JSONObject toJSON() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("device name", this.devicename);
-            jsonObject.put("device code", this.devicecode);
-            JSONArray jsonArray = new JSONArray();
-            int i = 0;
-            for (DeviceTask  deviceTask: this.deviceTasks) {
-                jsonArray.put(i, deviceTask.toJSON());
-                i++;
-            }
-            jsonObject.put("tasks", jsonArray);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonObject;
-    }
 }
