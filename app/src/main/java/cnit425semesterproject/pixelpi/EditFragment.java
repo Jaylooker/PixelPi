@@ -174,7 +174,8 @@ public class EditFragment extends Fragment implements DeviceTaskCallback {
     //sets up Fragment
     public void setSelecteddevice(Device selecteddevice) {
         this.selecteddevice = selecteddevice;
-        txtdevicenameedit.setText("Device: " + selecteddevice.getDevicename());
+        String devicename = getString(R.string.devicedisplaytext) + selecteddevice.getDevicename();
+        txtdevicenameedit.setText(devicename);
         this.deviceTasks = selecteddevice.getDeviceTasks();
         if(!(selecteddevice.getDeviceTasks().isEmpty())) //if device has tasks, update adapter
         {

@@ -109,7 +109,7 @@ public class SimpleDialog extends DialogFragment {
                 //launch color dialog
                 colorPickerDialogFragment = new ColorPickerDialogFragment();
                 //android.graphics.Color color = new android.graphics.Color();
-                colorPickerDialogFragment.newInstance(0, "Choose a color", "Ok" , /*color int */0, true);
+                colorPickerDialogFragment = ColorPickerDialogFragment.newInstance(0, "Choose a color", "Ok" , /*color int */0, true);
                 //colorPickerDialogFragment
                 //colorPickerDialogFragment.show(getFragmentManager(), "color dialog"); // TODO: 4/21/2018 fingure out .show
                 Color color = new Color(0,0,0);

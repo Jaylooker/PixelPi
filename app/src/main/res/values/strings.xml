@@ -25,6 +25,7 @@
     <string name="btnconnect">Connect</string>
     <string name="btndisconnect">Disconnect</string>
     <string name="btnport">Port:</string>
+    <string name="devicedisplaytext">"Device: "</string>
 
     <string-array name="devicemodes">
         <item>@string/SIMPLE</item>

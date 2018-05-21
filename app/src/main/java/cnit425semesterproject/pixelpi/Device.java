@@ -51,7 +51,7 @@ public class Device {
         return deviceTasks;
     }
 
-    @JsonIgnore //ignore when sending
+    @JsonIgnore //ignore when sending, will be merged on with desired task
     public void setDeviceTasks(ArrayList<DeviceTask> deviceTasks) {
         this.deviceTasks = deviceTasks;
     }
