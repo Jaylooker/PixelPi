@@ -247,20 +247,6 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
         fts.commit();
     }
 
-    //merging two JSONObjects
-    public JSONObject merge(JSONObject obj1, JSONObject obj2) throws JSONException {
-        JSONObject merged = new JSONObject();
-        JSONObject[] objects = {obj1, obj2};
-        for (JSONObject obj: objects) {
-            Iterator it = obj.keys();
-            while(it.hasNext()) {
-                String key = (String) it.next();
-                merged.put(key, obj.get(key));
-            }
-        }
-        return merged;
-    }
-
     //Fragment callback methods
 
     //SettingsFragment
@@ -340,21 +326,23 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
         ArrayList<DeviceTask> deviceTasks = selecteddevice.getDeviceTasks();
         deviceTasks.add(deviceTask);
         selecteddevice.setDeviceTasks(deviceTasks);
+        Device sentdevice = selecteddevice;
 
         //sending devticetask for now
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("cmd", "SIMPLE"); //updated to simple
-            jsonObject.put("send to", selecteddevice.getDevicecode()); //work on adding device code
-            jsonObject.put("mode", deviceTask.getMode());
-            /*
-            switch (deviceTask.getMode()) {
-                case display:
-                    break;
-            }
-            */ //use switch, constants messing things up
+        //try {
+            //Will be handled by Jackson Library
+            //jsonObject.put("cmd", "SIMPLE"); //updated to simple
+            //jsonObject.put("send to", selecteddevice.getDevicecode()); //work on adding device code
+            //jsonObject.put("mode", deviceTask.getMode());
+
+
             if(deviceTask.getMode().equals(getString(R.string.SIMPLE))) {
                 SimpleTask simpleTask = (SimpleTask) deviceTask;
+                ArrayList<DeviceTask> sentdevicetasks = new ArrayList<>();
+                sentdevicetasks.add(simpleTask);
+                sentdevice.setDeviceTasks(deviceTasks);
+
+                //map with special mapper for jsonObject.put values above
                 //jsonObject.put("task", simpleTask.toJSON());
                 /*JSONObject simplejson = new JSONObject();
                 try {
@@ -363,17 +351,27 @@ public class MainActivity extends AppCompatActivity implements SettingsFragmentL
                 catch (JSONException ex) {
                     ex.printStackTrace();
                 }
-                jsonObject = merge(jsonObject, simplejson);
                 */
             }
+            else if(deviceTask.getMode().equals(getString(R.string.TIMER))) {
+                /*
+                Timer Task task code
+                 */
+            }
+            else if(deviceTask.getMode().equals(getString(R.string.SHIMMER))){
+                /*
+                Shimmer task code
+                 */
+            }
+            else {
 
+            }
 
-
-        } catch (JSONException e) {
+        /*} catch (JSONException e) {
             e.printStackTrace();
-        }
-        client.sendJSON(jsonObject);
-        Log.i("Sent device task", jsonObject.toString());
+        }*/
+        //client.sendJSON(jsonObject);
+        //Log.i("Sent device task", jsonObject.toString());
 
         //update device
         //devicefragment.updatedevice(selecteddevice);
