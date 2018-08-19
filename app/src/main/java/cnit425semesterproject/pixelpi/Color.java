@@ -11,6 +11,8 @@ MIT License
 */
 package cnit425semesterproject.pixelpi;
 
+import android.support.v4.math.MathUtils;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
@@ -39,7 +41,7 @@ public class Color {
     }
 
     public void setRed(int red) {
-        this.colors[RED] = red;
+        this.colors[RED] = MathUtils.clamp(red, 0, 255);
     }
 
     public int getGreen() {
@@ -47,7 +49,7 @@ public class Color {
     }
 
     public void setGreen(int green) {
-        this.colors[GREEN] = green;
+        this.colors[GREEN] = MathUtils.clamp(green, 0, 255);
     }
 
     public int getBlue() {
@@ -55,7 +57,7 @@ public class Color {
     }
 
     public void setBlue(int blue) {
-        this.colors[BLUE] = blue;
+        this.colors[BLUE] = MathUtils.clamp(blue, 0, 255);
     }
 
     //constuctors
@@ -65,7 +67,7 @@ public class Color {
 
     @JsonCreator
     public Color(int red, int green, int blue) {
-        this.colors = new int[] {red, green, blue};
+        this.colors = new int[] {MathUtils.clamp(red, 0, 255), MathUtils.clamp(green, 0, 255), MathUtils.clamp(blue, 0, 255)};
     }
 }
 
